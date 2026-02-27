@@ -1,31 +1,53 @@
 <!DOCTYPE html>
+<html lang="zh-CN">
+<head>
 <meta charset="utf-8">
 <title>古月·霓虹灯商业门头提示词生成器</title>
 <style>
-*{box-sizing:border-box;margin:0;padding:0;font-family:"Microsoft YaHei",sans-serif}
-body{background:#f0f2f5;padding:0 0 60px}
-.head{background:linear-gradient(90deg,#FF4D94,#FF6B4A);color:#fff;text-align:center;padding:40px 20px;margin-bottom:30px}
-.box{max-width:800px;margin:0 auto 30px;background:#fff;border-radius:16px;padding:30px;box-shadow:0 4px 20px rgba(0,0,0,.06)}
-.label{font-size:15px;color:#333;margin-bottom:10px}
-.input{width:100%;padding:14px 16px;border:1px solid #e2e8f0;border-radius:10px;font-size:15px;margin-bottom:20px;outline:0}
-.btn{width:100%;padding:15px;background:linear-gradient(90deg,#FF4D94,#FF6B4A);color:#fff;border:none;border-radius:10px;font-size:16px;cursor:pointer}
-.btn:disabled{background:#ffb6c1}
-.result{max-width:800px;margin:0 auto;padding:0 20px}
-.item{background:#fff;border-radius:12px;padding:18px;margin-bottom:12px;border-left:4px solid #FF4D94;box-shadow:0 2px 10px rgba(0,0,0,.05);display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
-.item-text{flex:1;font-size:14px;line-height:1.6;color:#333}
-.copy{padding:6px 10px;background:#FF4D94;color:#fff;border:none;border-radius:6px;font-size:12px;cursor:pointer}
-.copy.done{background:#ccc;color:#666;cursor:default}
-.copy-all{margin:20px auto;display:block;padding:12px 24px;background:#FF4D94;color:#fff;border:none;border-radius:10px;font-size:15px;cursor:pointer}
+*{box-sizing:border-box;margin:0;padding:0;font-family:"Microsoft YaHei",sans-serif;}
+body{background:#f0f2f5;padding:0 0 60px;}
+.head{background:linear-gradient(90deg,#FF4D94,#FF6B4A);color:#fff;text-align:center;padding:40px 20px;margin-bottom:30px;}
+.box{max-width:800px;margin:0 auto 30px;background:#fff;border-radius:16px;padding:30px;box-shadow:0 4px 20px rgba(0,0,0,.06);}
+.label{font-size:15px;color:#333;margin-bottom:10px;}
+.input, select{width:100%;padding:14px 16px;border:1px solid #e2e8f0;border-radius:10px;font-size:15px;margin-bottom:20px;outline:0;}
+.btn{width:100%;padding:15px;background:linear-gradient(90deg,#FF4D94,#FF6B4A);color:#fff;border:none;border-radius:10px;font-size:16px;cursor:pointer;}
+.btn:disabled{background:#ffb6c1;}
+.result{max-width:800px;margin:0 auto;padding:0 20px;}
+.item{background:#fff;border-radius:12px;padding:18px;margin-bottom:12px;border-left:4px solid #FF4D94;box-shadow:0 2px 10px rgba(0,0,0,.05);display:flex;justify-content:space-between;align-items:flex-start;gap:12px;}
+.item-text{flex:1;font-size:14px;line-height:1.6;color:#333;}
+.copy{padding:6px 10px;background:#FF4D94;color:#fff;border:none;border-radius:6px;font-size:12px;cursor:pointer;}
+.copy.done{background:#ccc;color:#666;cursor:default;}
+.copy-all{margin:20px auto;display:block;padding:12px 24px;background:#FF4D94;color:#fff;border:none;border-radius:10px;font-size:15px;cursor:pointer;}
 </style>
+</head>
+<body>
 
 <div class="head">
   <h1>古月·霓虹灯商业门头提示词生成器</h1>
-  <p>白天正立面｜平视无遮挡｜100%可施工｜20组不重复</p>
+  <p>白天/夜晚｜异形造型｜字体多版本｜20组不重复</p>
 </div>
 
 <div class="box">
   <div class="label">输入行业类型（如：餐饮、奶茶、服装、电竞、酒吧、美容）</div>
   <input class="input" id="industry" placeholder="例如：餐饮美食">
+
+  <div class="label">选择时间效果</div>
+  <select id="time">
+    <option value="白天">白天</option>
+    <option value="夜晚">夜晚</option>
+  </select>
+
+  <div class="label">选择门头造型</div>
+  <select id="shape">
+    <option value="平直">平直</option>
+    <option value="圆弧">圆弧</option>
+    <option value="折角">折角</option>
+    <option value="波浪">波浪</option>
+    <option value="多边形">多边形</option>
+    <option value="拱形">拱形</option>
+    <option value="悬挑">悬挑</option>
+  </select>
+
   <button class="btn" id="go" onclick="run()">🚀 生成20组霓虹灯门头提示词</button>
 </div>
 
@@ -34,8 +56,12 @@ body{background:#f0f2f5;padding:0 0 60px}
 <script>
 const texts = [];
 
-function make(industry, i){
-  const types = [
+// 随机抽取
+function pick(arr){return arr[Math.floor(Math.random()*arr.length)];}
+
+// 生成单条提示词
+function make(industry,i){
+  const types=[
     "主营品类+潮流醒目标语","特色品类+潮流吸睛标语","招牌项目+潮流创意标语",
     "核心品类+时尚醒目标语","爆款项目+个性潮流标语","主营项目+年轻化潮流标语",
     "特色服务+视觉吸睛标语","经典品类+简洁有力标语","王牌项目+网红风标语",
@@ -44,45 +70,56 @@ function make(industry, i){
     "经典产品+记忆点强标语","热门服务+简约潮流标语","主推服务+创意吸睛标语",
     "特色经营+潮流个性标语","主营特色+时尚吸睛标语"
   ];
-  return `白天自然光，门头正立面，完整展示，正面平视视角，无透视畸变，无遮挡，霓虹灯门头，潮流醒目、氛围感强、夜间效果佳、年轻网红气质，${industry}店铺门头，霓虹灯灯带、霓虹灯管、硅胶霓虹灯、亚克力底板、不锈钢包边、烤漆板、铁艺造型，品牌店名+${types[i]}，现代粗体创意字体，日间霓虹灯带清晰发光、轮廓发光、氛围光、高亮醒目，8K高清，商业写实效果图，细节丰富，色彩自然，可直接施工参考`;
+
+  const fonts=[
+    "亚克力发光字","简约立体字","精致金属字","柔和背光字","极简无边字",
+    "清新卡通字","高级细体字","圆润可爱字","国潮风字体","手写艺术字","创意发光字","3D立体字"
+  ];
+
+  const timeDesc=document.getElementById("time").value==="夜晚"?"夜晚霓虹灯、灯光氛围、轮廓发光、光影反射":"白天自然光、平视无遮挡、柔和光照";
+  const shapeDesc=document.getElementById("shape").value+"异形造型";
+
+  return `${timeDesc}，${shapeDesc}，${pick(fonts)}，${industry}门头，霓虹灯管、硅胶霓虹灯、亚克力底板、不锈钢包边、烤漆板、铁艺造型，品牌店名+${types[i]}`;
 }
 
+// 复制单条
 function copyOne(t,btn){
   navigator.clipboard.writeText(t).then(()=>{
     btn.classList.add("done");
-    btn.innerText = "已复制";
+    btn.innerText="已复制";
   });
 }
 
+// 复制全部
 function copyAll(){
-  navigator.clipboard.writeText(texts.join("\n\n")).then(()=>{
-    alert("✅ 已复制全部20组");
-  });
+  navigator.clipboard.writeText(texts.join("\n\n")).then(()=>{alert("✅ 已复制全部20组");});
 }
 
-function run(){
-  const val = document.getElementById("industry").value.trim();
-  if(!val){alert("请输入行业类型");return}
-  const btn = document.getElementById("go");
-  btn.disabled = true;
-  btn.innerText = "生成中...";
-  
+// 运行生成
+function run(){函数 运行(){
+  const val=document.getElementById("industry").value.trim();
+  if(!val){alert("请输入行业类型");return;}
+  const btn=document.getElementById("go");
+  btn.disabled=true;
+  btn.innerText="生成中...";
+
   setTimeout(()=>{
-    let arr = [];
+    let arr=[];
     for(let i=0;i<20;i++) arr.push(make(val,i));
-    texts.splice(0, texts.length, ...arr);
-    
-    let html = "";
-    arr.forEach((t,i)=>{
-      html += `<div class="item"><div class="item-text">${i+1}. ${t}</div><button class="copy" onclick="copyOne('${t.replace(/'/g,"\\'")}',this)">复制</button></div>`;
+    texts.splice(0,texts.length,...arr);文本.拼接(0,文本.长度,...数组);
+
+    let html="";
+    arr.forEach((t,i)=>{数组.遍历((元素,索引)=>{
+      html+=`<div class="item"><div class="item-text">${i+1}. ${t}</div><button class="copy" onclick="copyOne('${t.replace替换替换替换替换(/'/g,"\\'")}',this)">复制</button></div>`;
     });
-    html += `<button class="copy-all" onclick="copyAll()">📋 一键复制全部20组</button>`;
-    document.getElementById("result").innerHTML = html;
-    
-    btn.disabled = false;
-    btn.innerText = "🚀 生成20组霓虹灯门头提示词";
-  }, 600);
+    html+=`<button class="copy-all" onclick="copyAll()">📋 一键复制全部20组</button>`;html+=`<button class="copy-all" onclick="copyAll()">一键复制全部20组</button>`;html+=`<button class="copy-all" onclick="copyAll()">一键复制全部20组</button>`;html+=`<button class="copy-all" onclick="copyAll()">一键复制全部20组</button>`;
+    document.getElementById("result").innerHTML=html;
+
+    btn.disabled=false;
+    btn.innerText="🚀 生成20组霓虹灯门头提示词";
+  },500);
 }
 </script>
+
 </body>
 </html>
