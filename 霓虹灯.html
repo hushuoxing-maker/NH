@@ -24,7 +24,7 @@ body{background:#f0f2f5;padding:0 0 60px;}
 
 <div class="head">
   <h1>古月·霓虹灯商业门头提示词生成器</h1>
-  <p>白天/夜晚｜异形造型｜字体多版本｜完全正面展示｜20组不重复</p>
+  <p>白天/夜晚｜异形造型｜字体多版本｜店铺正立面完全展示｜20组不重复</p>
 </div>
 
 <div class="box">
@@ -85,8 +85,8 @@ function make(industry, i) {
   const fontDesc = pick(fonts);
   const typeDesc = types[i % types.length];
 
-  // 核心修改：加入「完全正面展示」描述，放在最显眼的位置
-  return `${timeDesc}，完全正面展示，${shapeDesc}，${fontDesc}，${industry}门头，霓虹灯管、硅胶霓虹灯、亚克力底板、不锈钢包边、烤漆板、铁艺造型，品牌店名+${typeDesc}`;
+  // 核心修改：替换为「店铺正立面完全展示」
+  return `${timeDesc}，店铺正立面完全展示，${shapeDesc}，${fontDesc}，${industry}门头，霓虹灯管、硅胶霓虹灯、亚克力底板、不锈钢包边、烤漆板、铁艺造型，品牌店名+${typeDesc}`;
 }
 
 // 复制单条
