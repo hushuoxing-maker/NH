@@ -54,10 +54,10 @@ body{background:#f0f2f5;padding:0 0 60px;}
 <div class="result" id="result"></div>
 
 <script>
-const texts = [];
+const texts=[];
 
 // 随机抽取
-function pick(arr){return arr[Math.floor(Math.random()*arr.length)];}
+function pick(arr){ return arr[Math.floor(Math.random()*arr.length)]; }
 
 // 生成单条提示词
 function make(industry,i){
@@ -70,16 +70,17 @@ function make(industry,i){
     "经典产品+记忆点强标语","热门服务+简约潮流标语","主推服务+创意吸睛标语",
     "特色经营+潮流个性标语","主营特色+时尚吸睛标语"
   ];
-
   const fonts=[
     "亚克力发光字","简约立体字","精致金属字","柔和背光字","极简无边字",
     "清新卡通字","高级细体字","圆润可爱字","国潮风字体","手写艺术字","创意发光字","3D立体字"
   ];
 
-  const timeDesc=document.getElementById("time").value==="夜晚"?"夜晚霓虹灯、灯光氛围、轮廓发光、光影反射":"白天自然光、平视无遮挡、柔和光照";
-  const shapeDesc=document.getElementById("shape").value+"异形造型";
+  const timeDesc = document.getElementById("time").value==="夜晚" ? "夜晚霓虹灯、灯光氛围、轮廓发光、光影反射" : "白天自然光、平视无遮挡、柔和光照";
+  const shapeDesc = document.getElementById("shape").value+"异形造型";
+  const fontDesc = pick(fonts);
+  const typeDesc = types[i % types.length];
 
-  return `${timeDesc}，${shapeDesc}，${pick(fonts)}，${industry}门头，霓虹灯管、硅胶霓虹灯、亚克力底板、不锈钢包边、烤漆板、铁艺造型，品牌店名+${types[i]}`;
+  return `${timeDesc}，${shapeDesc}，${fontDesc}，${industry}门头，霓虹灯管、硅胶霓虹灯、亚克力底板、不锈钢包边、烤漆板、铁艺造型，品牌店名+${typeDesc}`;
 }
 
 // 复制单条
@@ -95,10 +96,10 @@ function copyAll(){
   navigator.clipboard.writeText(texts.join("\n\n")).then(()=>{alert("✅ 已复制全部20组");});
 }
 
-// 运行生成
+// 生成20组
 function run(){函数 运行(){
-  const val=document.getElementById("industry").value.trim();
-  if(!val){alert("请输入行业类型");return;}
+  const常量 val值=document.getElementById("industry"“行业”).value值.trim修剪();
+  if(!val){alert("请输入行业类型"); return;}
   const btn=document.getElementById("go");
   btn.disabled=true;
   btn.innerText="生成中...";
@@ -110,14 +111,17 @@ function run(){函数 运行(){
 
     let html="";
     arr.forEach((t,i)=>{数组.遍历((元素,索引)=>{
-      html+=`<div class="item"><div class="item-text">${i+1}. ${t}</div><button class="copy" onclick="copyOne('${t.replace替换替换替换替换(/'/g,"\\'")}',this)">复制</button></div>`;
+      html+=`<div class="item">
+        <div class="item-text">${i+1}. ${t}</div>
+        <button class="copy" onclick="copyOne('${t.replace(/'/g,"\\'")}',this)">复制</button>
+      </div>`;
     });
     html+=`<button class="copy-all" onclick="copyAll()">📋 一键复制全部20组</button>`;html+=`<button class="copy-all" onclick="copyAll()">一键复制全部20组</button>`;html+=`<button class="copy-all" onclick="copyAll()">一键复制全部20组</button>`;html+=`<button class="copy-all" onclick="copyAll()">一键复制全部20组</button>`;
     document.getElementById("result").innerHTML=html;
 
     btn.disabled=false;
     btn.innerText="🚀 生成20组霓虹灯门头提示词";
-  },500);
+  },300);
 }
 </script>
 
